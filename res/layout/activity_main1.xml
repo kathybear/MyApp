@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ypf.myapp.PullAndLoadLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/pal" >
+    
+    <include layout="@layout/refresh_head" />
+    
+    <ListView
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp" >
+    </ListView>
+
+    <include layout="@layout/load_more" />
+
+</com.ypf.myapp.PullAndLoadLayout>
