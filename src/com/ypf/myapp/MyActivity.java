@@ -22,6 +22,7 @@ public class MyActivity extends Activity implements View.OnClickListener{
         btn = (Button) findViewById(R.id.btn);
         btn.setOnClickListener(this);
         findViewById(R.id.btn_dot).setOnClickListener(this);
+        findViewById(R.id.btn_running_dots).setOnClickListener(this);
     }
 
     @Override
@@ -32,6 +33,8 @@ public class MyActivity extends Activity implements View.OnClickListener{
                 break;
             case R.id.btn_dot:
                 startActivity(new Intent(context, MyRoundDotActivity.class));
+                break;
+            case R.id.btn_running_dots:
                 break;
         }
     }
