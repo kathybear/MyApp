@@ -28,7 +28,7 @@ public class MyRoundProgress extends View{
     private float progress = 0f;
     private float totalProgress;
     private boolean isStartAnim = false;
-    private List<Dot> dots = new ArrayList<Dot>();
+    private List<MyRunningDots> dots = new ArrayList<MyRunningDots>();
     private final int DOTDISTANCE = 20;
     private final int DOTNUM = 4;
     private float fromX = DOTDISTANCE;
@@ -153,47 +153,11 @@ public class MyRoundProgress extends View{
             dotY = getMeasuredHeight() - getTotalProgress() / 2f;
             dotAngle = (float) (Math.atan((bottomX - fromX) / (getTotalProgress() / 2f)) / Math.PI * 180);
             dots.clear();
-            Dot dot;
+            MyRunningDots dot;
             for (int i = 0; i < DOTNUM; i++){
-                dot = new Dot(fromX, dotY, i);
+                dot = new MyRunningDots(fromX, dotY, i);
                 dots.add(dot);
             }
-        }
-    }
-
-    class Dot{
-        private float curX;
-        private float curY;
-        private int index;
-
-        public Dot(float curX, float curY, int index) {
-            this.curX = curX;
-            this.curY = curY;
-            this.index = index;
-        }
-
-        public float getCurX() {
-            return curX;
-        }
-
-        public void setCurX(float curX) {
-            this.curX = curX;
-        }
-
-        public float getCurY() {
-            return curY;
-        }
-
-        public void setCurY(float curY) {
-            this.curY = curY;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
         }
     }
 
@@ -206,43 +170,4 @@ public class MyRoundProgress extends View{
         }
     };
 
-    class MyTimer{
-        private Handler handler;
-        private Timer timer;
-        private MyTask mTask;
-
-        public MyTimer(Handler handler) {
-            super();
-            this.handler = handler;
-            timer = new Timer();
-        }
-
-        public void schedule(long period){
-            cancel();
-            mTask = new MyTask(handler);
-            timer.schedule(mTask, 0, period);
-        }
-
-        public void cancel(){
-            if(null != mTask){
-                mTask.cancel();
-                mTask = null;
-            }
-        }
-
-        class MyTask extends TimerTask {
-            private Handler handler;
-
-            public MyTask(Handler handler) {
-                super();
-                this.handler = handler;
-            }
-
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                handler.obtainMessage().sendToTarget();
-            }
-        }
-    }
 }

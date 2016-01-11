@@ -19,5 +19,6 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".ViewPagerAndFragmentActivity"/>
         <activity android:name=".MyRoundDotActivity"/>
+        <activity android:name=".MyRunningDotsActivity"/>
     </application>
 </manifest>
