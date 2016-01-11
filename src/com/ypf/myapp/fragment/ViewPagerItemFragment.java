@@ -1,4 +1,4 @@
-package com.ypf.myapp;
+package com.ypf.myapp.fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,10 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.*;
+import com.ypf.myapp.adapter.MyAdapter;
+import com.ypf.myapp.R;
+import com.ypf.myapp.tools.OnRefreshListener;
+import com.ypf.myapp.view.PullToRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;

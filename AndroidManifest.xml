@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ViewPagerAndFragmentActivity"/>
-        <activity android:name=".MyRoundDotActivity"/>
-        <activity android:name=".MyRunningDotsActivity"/>
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.ViewPagerAndFragmentActivity"/>
+        <activity android:name=".activity.MyRoundDotActivity"/>
+        <activity android:name=".activity.MyRunningDotsActivity"/>
     </application>
 </manifest>

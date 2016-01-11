@@ -1,4 +1,4 @@
-package com.ypf.myapp;
+package com.ypf.myapp.view;
 
 import android.content.Context;
 import android.graphics.*;
@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import com.ypf.myapp.bean.MyPoint;
 
 /**
  * Created by ypf on 2015/12/23.

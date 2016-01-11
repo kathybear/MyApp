@@ -1,4 +1,4 @@
-package com.ypf.myapp;
+package com.ypf.myapp.bean;
 
 /**
  * Created by ypf on 2016/1/8.
