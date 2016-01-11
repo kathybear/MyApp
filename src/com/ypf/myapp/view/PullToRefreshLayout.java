@@ -1,4 +1,4 @@
-package com.ypf.myapp;
+package com.ypf.myapp.view;
 
 import android.content.Context;
 import android.graphics.*;
@@ -15,6 +15,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.AbsListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.ypf.myapp.tools.OnRefreshListener;
+import com.ypf.myapp.R;
 
 import java.lang.reflect.Field;
 import java.util.Timer;

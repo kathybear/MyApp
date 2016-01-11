@@ -1,4 +1,4 @@
-package com.ypf.myapp;
+package com.ypf.myapp.view;
 
 import android.content.Context;
 import android.graphics.*;
@@ -6,11 +6,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
+import com.ypf.myapp.bean.MyRunningDots;
+import com.ypf.myapp.R;
+import com.ypf.myapp.tools.MyTimer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by ypf on 2015/12/19.

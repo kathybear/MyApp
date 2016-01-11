@@ -1,8 +1,7 @@
-package com.ypf.myapp;
+package com.ypf.myapp.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +12,13 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.*;
+import com.ypf.myapp.adapter.MyAdapter;
+import com.ypf.myapp.R;
+import com.ypf.myapp.tools.OnRefreshListener;
+import com.ypf.myapp.tools.UIThread;
+import com.ypf.myapp.utils.Intents;
+import com.ypf.myapp.view.PullAndLoadLayout;
+import com.ypf.myapp.view.PullToRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +27,8 @@ import java.util.List;
  * Created by ypf on 2015/12/18.
  */
 public class MainActivity extends Activity implements OnRefreshListener, View.OnClickListener {
+    private Context context;
+
     private AbsListView alv;
     private PullToRefreshLayout refreshLayout;
     private View loading;
@@ -54,6 +62,7 @@ public class MainActivity extends Activity implements OnRefreshListener, View.On
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+        context = this;
         //		init();
         init1();
     }
@@ -207,8 +216,7 @@ public class MainActivity extends Activity implements OnRefreshListener, View.On
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
             {
                 Toast.makeText(MainActivity.this, " Click on group " + groupPosition + " item " + childPosition, Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(MainActivity.this, ViewPagerAndFragmentActivity.class);
-                startActivity(i);
+                Intents.skipViewPagerAndFragmentActivity(context);
                 return true;
             }
         });

@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <com.ypf.myapp.MyRoundDot
+    <com.ypf.myapp.view.MyRoundDot
             android:id="@+id/mydot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

@@ -1,6 +1,7 @@
-package com.ypf.myapp;
+package com.ypf.myapp.tools;
 
 import android.animation.TypeEvaluator;
+import com.ypf.myapp.bean.MyPoint;
 
 /**
  * Created by ypf on 2015/12/28.

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
-    <com.ypf.myapp.MyRoundProgress
+    <com.ypf.myapp.view.MyRoundProgress
         android:id="@+id/mrp1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

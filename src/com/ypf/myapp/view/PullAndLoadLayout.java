@@ -1,4 +1,4 @@
-package com.ypf.myapp;
+package com.ypf.myapp.view;
 
 import android.content.Context;
 import android.os.Handler;
@@ -9,9 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.RelativeLayout;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.ypf.myapp.tools.MyTimer;
+import com.ypf.myapp.R;
 
 /**
  * Created by ypf on 2015/12/18.

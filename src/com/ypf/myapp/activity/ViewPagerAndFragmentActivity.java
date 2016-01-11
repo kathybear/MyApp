@@ -1,4 +1,4 @@
-package com.ypf.myapp;
+package com.ypf.myapp.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
+import com.ypf.myapp.R;
+import com.ypf.myapp.fragment.ViewPagerItemFragment;
 
 /**
  * Created by ypf on 2015/12/18.
