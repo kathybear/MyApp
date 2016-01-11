@@ -7,6 +7,8 @@ public class MyRunningDots {
     private float curX;
     private float curY;
     private int index;
+    private float radius;
+    private int color;
 
     public MyRunningDots(float curX, float curY, int index) {
         this.curX = curX;
@@ -36,5 +38,21 @@ public class MyRunningDots {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
