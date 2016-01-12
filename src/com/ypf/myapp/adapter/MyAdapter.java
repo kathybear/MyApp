@@ -14,8 +14,14 @@ import java.util.List;
  * Created by ypf on 2015/12/18.
  */
 public class MyAdapter extends BaseAdapter {
-    List<String> items;
-    Context context;
+    private List<String> items;
+    private Context context;
+    private int layoutID = -1;
+
+    public MyAdapter(List<String> items, Context context, int layoutID) {
+        this(context, items);
+        this.layoutID = layoutID;
+    }
 
     public MyAdapter(Context context, List<String> items) {
         this.context = context;
@@ -39,9 +45,14 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(
-                R.layout.list_item_layout, null);
-        TextView tv = (TextView) view.findViewById(R.id.name_tv);
+        View view;
+        TextView tv;
+        if (layoutID == -1) {
+            view = LayoutInflater.from(context).inflate(R.layout.list_item_layout, parent, false);
+            tv = (TextView) view.findViewById(R.id.name_tv);
+        } else {
+            view = LayoutInflater.from(context).inflate(layoutID, parent, false);
+        }
         tv.setText(items.get(position));
         return view;
     }

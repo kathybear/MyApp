@@ -17,5 +17,11 @@
     <string name="GPS_ready">GPS is ready</string>
     <string name="GPS_closed">GPS 定位关闭，请打开定位!</string>
     <string name="network_closed">请检查网络连接!</string>
+    
+    <string-array name="first_directory">
+        <item>to pull and load</item>
+        <item>to my round dot</item>
+        <item>to my running_dots</item>
+    </string-array>
 
 </resources>

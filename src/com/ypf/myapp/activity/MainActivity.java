@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Created by ypf on 2015/12/18.
  */
-public class MainActivity extends Activity implements OnRefreshListener, View.OnClickListener {
+public class MainActivity extends Activity implements OnRefreshListener {
     private Context context;
 
     private AbsListView alv;
@@ -262,26 +262,6 @@ public class MainActivity extends Activity implements OnRefreshListener, View.On
                 refreshLayout.refreshFinish(PullToRefreshLayout.REFRESH_SUCCEED);
             }
         }.sendEmptyMessageDelayed(0, 5000);
-    }
-
-    @Override
-    public void onClick(View v)
-    {
-//        switch (v.getId())
-//        {
-//            case R.id.loadmore_layout:
-//                if (!isLoading)
-//                {
-//                    loading.setVisibility(View.VISIBLE);
-//                    loading.startAnimation(loadingAnimation);
-//                    loadTextView.setText(R.string.loading);
-//                    isLoading = true;
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-
     }
 
     class ExpandableListAdapter extends BaseExpandableListAdapter

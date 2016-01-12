@@ -5,24 +5,25 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import com.ypf.myapp.utils.Intents;
 
-public class MyActivity extends Activity implements View.OnClickListener{
-    private Button btn;
+import java.util.List;
+
+public class MyActivity extends Activity {
+    private ListView list_main;
     private Context context;
-    /**
-     * Called when the activity is first created.
-     */
+    private List<String> items;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         context = this;
 
-        btn = (Button) findViewById(R.id.btn);
-        btn.setOnClickListener(this);
-        findViewById(R.id.btn_dot).setOnClickListener(this);
-        findViewById(R.id.btn_running_dots).setOnClickListener(this);
+        list_main = (ListView) findViewById(R.id.list_main);
+        String[] strs = getResources().getStringArray(R.array.first_directory);
+
     }
 
     @Override
