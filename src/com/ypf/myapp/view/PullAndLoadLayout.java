@@ -33,8 +33,11 @@ public class PullAndLoadLayout extends RelativeLayout {
     // 下拉头
     private View headView;
     private MyRoundProgress headmrp;
+    private RunningDots headrdots;
     //上拉头
     private View footView;
+    private MyRoundProgress footmrp;
+    private RunningDots footrdots;
     // 拉动内容
     private AbsListView contentView;
     private boolean firstLayout = true;
@@ -93,12 +96,20 @@ public class PullAndLoadLayout extends RelativeLayout {
             firstLayout = false;
             headView = getChildAt(0);
             headmrp = (MyRoundProgress) headView.findViewById(R.id.mrp1);
+            headrdots = (RunningDots) headView.findViewById(R.id.rdots1);
             contentView = (AbsListView) getChildAt(1);
-            refreshDist = ((ViewGroup) headView).getChildAt(1).getMeasuredHeight();
+            refreshDist = headrdots.getMeasuredHeight();
             headmrp.setTotalProgress(refreshDist);
+            headrdots.setColor(getResources().getColor(R.color.gray));
 
             footView = getChildAt(2);
-            loadDist = ((ViewGroup) footView).getChildAt(0).getMeasuredHeight();
+            footmrp = (MyRoundProgress) footView.findViewById(R.id.mrp2);
+            footrdots = (RunningDots) footView.findViewById(R.id.rdots2);
+            loadDist = footrdots.getMeasuredHeight();
+            footmrp.setTotalProgress(loadDist);
+            footmrp.setDirection(MyRoundProgress.Direction.TOP);
+            footrdots.setColor(getResources().getColor(R.color.gray));
+            footrdots.setType(RunningDots.AnimType.REVERSE);
         }
         //pullDownDist和pullUpDist不会同时不为0
         headView.layout(0, (int) pullDownDist + (int) pullUpDist - headView.getMeasuredHeight(), headView.getMeasuredWidth(), (int) pullDownDist + (int) pullUpDist);
@@ -119,8 +130,8 @@ public class PullAndLoadLayout extends RelativeLayout {
                 rollBackSpeed = (float) (8 + 5 * Math.tan(Math.PI / 2 /getMeasuredHeight() * pullDownDist));
                 if(state == REFRESHING && pullDownDist <= refreshDist){
                     pullDownDist = refreshDist;
-                    headmrp.setStartAnim(true);
                     timer.cancel();
+                    startHeadAnim();
                 } else {
                     pullDownDist -= rollBackSpeed;
                     if(pullDownDist <= 0){
@@ -129,6 +140,7 @@ public class PullAndLoadLayout extends RelativeLayout {
                         if(state == DONE)
                             changeState(INIT);
                     }
+                    stopHeadAnim();
                 }
 
                 requestLayout();
@@ -139,6 +151,7 @@ public class PullAndLoadLayout extends RelativeLayout {
                 if (state == LOADING && pullUpDist >= -loadDist){
                     pullUpDist = -loadDist;
                     timer.cancel();
+                    startFootAnim();
                 } else {
                     pullUpDist += rollBackSpeed;
                     if (pullUpDist >= 0){
@@ -147,9 +160,11 @@ public class PullAndLoadLayout extends RelativeLayout {
                         if (state == DONE)
                             changeState(INIT);
                     }
+                    stopFootAnim();
                 }
 
                 requestLayout();
+                footmrp.setProgress(-pullUpDist);
             }
         }
 
@@ -185,6 +200,7 @@ public class PullAndLoadLayout extends RelativeLayout {
                     //通过重新布局达到滑动效果
                     requestLayout();
 
+                    stopHeadAnim();
                     headmrp.setProgress(pullDownDist);
 
                     if(pullDownDist >= refreshDist && state == INIT)
@@ -205,6 +221,10 @@ public class PullAndLoadLayout extends RelativeLayout {
                     lastY = ev.getY();
                     radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight() * (-pullUpDist)));
                     requestLayout();
+
+                    stopFootAnim();
+                    footmrp.setProgress(-pullUpDist);
+
                     if (pullUpDist <= -loadDist && state == INIT)
                         changeState(RELEASE_TO_LOAD);
                     if (pullUpDist >= -loadDist && state == RELEASE_TO_LOAD)
@@ -280,6 +300,38 @@ public class PullAndLoadLayout extends RelativeLayout {
         state = DONE;
         hide();
 
+    }
+
+    private void startHeadAnim(){
+        if (!headrdots.isRunning()){
+            headmrp.setVisibility(INVISIBLE);
+            headrdots.setVisibility(VISIBLE);
+            headrdots.startAnim();
+        }
+    }
+
+    private void stopHeadAnim(){
+        if (headrdots.isRunning()){
+            headrdots.stopAnim();
+            headrdots.setVisibility(INVISIBLE);
+            headmrp.setVisibility(VISIBLE);
+        }
+    }
+
+    private void startFootAnim(){
+        if (!footrdots.isRunning()){
+            footmrp.setVisibility(INVISIBLE);
+            footrdots.setVisibility(VISIBLE);
+            footrdots.startAnim();
+        }
+    }
+
+    private void stopFootAnim(){
+        if (footrdots.isRunning()){
+            footrdots.stopAnim();
+            footrdots.setVisibility(INVISIBLE);
+            footmrp.setVisibility(VISIBLE);
+        }
     }
 
     private PullAndLoadListener listener = null;

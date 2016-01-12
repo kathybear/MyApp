@@ -3,11 +3,25 @@
     android:id="@+id/loadmore_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray" >
+    android:background="@color/white" >
+
+    <com.ypf.myapp.view.MyRoundProgress
+            android:id="@+id/mrp2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"/>
+
+    <com.ypf.myapp.view.RunningDots
+            android:id="@+id/rdots2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:visibility="invisible"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_alignParentTop="true"
         android:paddingBottom="20dp"
         android:paddingTop="20dp" >
@@ -15,7 +29,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" >
+            android:layout_centerInParent="true"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/pullup_icon"

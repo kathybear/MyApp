@@ -2,21 +2,18 @@ package com.ypf.myapp.view;
 
 import android.content.Context;
 import android.graphics.*;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
-import com.ypf.myapp.bean.MyRunningDots;
 import com.ypf.myapp.R;
-import com.ypf.myapp.tools.MyTimer;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ypf on 2015/12/19.
  */
 public class MyRoundProgress extends View{
+    public enum Direction{
+        TOP, BOTTOM, LEFT, RIGHT
+    }
+
     private Paint mPaint;
     private RectF ovalBottom = null;
     private float bottomX;
@@ -28,15 +25,7 @@ public class MyRoundProgress extends View{
     private int progressColor = Color.BLACK;
     private float progress = 0f;
     private float totalProgress;
-    private boolean isStartAnim = false;
-    private List<MyRunningDots> dots = new ArrayList<MyRunningDots>();
-    private final int DOTDISTANCE = 20;
-    private final int DOTNUM = 4;
-    private float fromX = DOTDISTANCE;
-    private float toX = DOTDISTANCE;
-    private float dotY;
-    private float dotAngle;
-    private MyTimer time;
+    private Direction direction = Direction.BOTTOM;
 
     public MyRoundProgress(Context context) {
         super(context);
@@ -60,36 +49,37 @@ public class MyRoundProgress extends View{
 
         lightBlue = getResources().getColor(R.color.light_blue);
         lightGray = getResources().getColor(R.color.light_gray);
-
-        time = new MyTimer(animHandler);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if (isStartAnim){
-            time.schedule(50);
-        }else{
-            mPaint.setStrokeWidth(getProgressWidth() * 2 + 2);
-            mPaint.setColor(lightGray);
-            canvas.drawCircle(bottomX, bottomY, bottomRadius, mPaint);
-            if (progress > getTotalProgress()){
-                if (null != ovalBottom) {
-                    mPaint.setStrokeWidth(getProgressWidth() - 2);
-                    mPaint.setColor(lightBlue);
-                    canvas.drawCircle(bottomX, bottomY, bottomRadius, mPaint);
-                    mPaint.setStrokeWidth(getProgressWidth());
-                    mPaint.setColor(Color.BLACK);
-                    canvas.drawArc(ovalBottom, 90, (getProgress() - getTotalProgress()) / getTotalProgress() * 360, false, mPaint);
-                }
-            } else {
-                if (null != ovalBottom) {
-                    mPaint.setStrokeWidth(getProgressWidth() - 2);
-                    mPaint.setColor(Color.BLACK);
-                    canvas.drawCircle(bottomX, bottomY, bottomRadius, mPaint);
-                    mPaint.setStrokeWidth(getProgressWidth());
-                    mPaint.setColor(lightBlue);
-                    canvas.drawArc(ovalBottom, 90, getProgress() / getTotalProgress() * 360, false, mPaint);
-                }
+        mPaint.setStrokeWidth(getProgressWidth() * 2 + 2);
+        mPaint.setColor(lightGray);
+        canvas.drawCircle(bottomX, bottomY, bottomRadius, mPaint);
+        int startAngle = 90;
+        if (direction == Direction.TOP)
+            startAngle = -90;
+        else if (direction == Direction.LEFT)
+            startAngle = 180;
+        else if (direction == Direction.RIGHT)
+            startAngle = 0;
+        if (progress > getTotalProgress()){
+            if (null != ovalBottom) {
+                mPaint.setStrokeWidth(getProgressWidth() - 2);
+                mPaint.setColor(lightBlue);
+                canvas.drawCircle(bottomX, bottomY, bottomRadius, mPaint);
+                mPaint.setStrokeWidth(getProgressWidth());
+                mPaint.setColor(Color.BLACK);
+                canvas.drawArc(ovalBottom, startAngle, (getProgress() - getTotalProgress()) / getTotalProgress() * 360, false, mPaint);
+            }
+        } else {
+            if (null != ovalBottom) {
+                mPaint.setStrokeWidth(getProgressWidth() - 2);
+                mPaint.setColor(Color.BLACK);
+                canvas.drawCircle(bottomX, bottomY, bottomRadius, mPaint);
+                mPaint.setStrokeWidth(getProgressWidth());
+                mPaint.setColor(lightBlue);
+                canvas.drawArc(ovalBottom, startAngle, getProgress() / getTotalProgress() * 360, false, mPaint);
             }
         }
         super.draw(canvas);
@@ -127,10 +117,21 @@ public class MyRoundProgress extends View{
 
     public void setProgress(float progress) {
         bottomRadius = progress / 6f - getProgressWidth() / 2f;
-        bottomX = getMeasuredWidth() / 2f;
-        bottomY = getMeasuredHeight() - progress / 2f;
-        ovalBottom = new RectF(bottomX - bottomRadius, bottomY - bottomRadius, bottomX + bottomRadius, bottomY + bottomRadius);
+        if (direction == Direction.BOTTOM){
+            bottomX = getMeasuredWidth() / 2f;
+            bottomY = getMeasuredHeight() - progress / 2f;
+        } else if (direction == Direction.TOP){
+            bottomX = getMeasuredWidth() / 2f;
+            bottomY = progress / 2f;
+        } else if (direction == Direction.LEFT){
+            bottomX = getMeasuredWidth() - progress / 2f;
+            bottomY = getMeasuredHeight() / 2f;
+        } else if (direction == Direction.RIGHT){
+            bottomX = progress / 2f;
+            bottomY = getMeasuredHeight() / 2f;
+        }
 
+        ovalBottom = new RectF(bottomX - bottomRadius, bottomY - bottomRadius, bottomX + bottomRadius, bottomY + bottomRadius);
         this.progress = progress;
         postInvalidate();
     }
@@ -143,32 +144,7 @@ public class MyRoundProgress extends View{
         this.totalProgress = totalProgress;
     }
 
-    public boolean isStartAnim() {
-        return isStartAnim;
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
-
-    public void setStartAnim(boolean startAnim) {
-        isStartAnim = startAnim;
-        if (startAnim){
-            toX = getMeasuredWidth() - fromX;
-            dotY = getMeasuredHeight() - getTotalProgress() / 2f;
-            dotAngle = (float) (Math.atan((bottomX - fromX) / (getTotalProgress() / 2f)) / Math.PI * 180);
-            dots.clear();
-            MyRunningDots dot;
-            for (int i = 0; i < DOTNUM; i++){
-                dot = new MyRunningDots(fromX, dotY, i);
-                dots.add(dot);
-            }
-        }
-    }
-
-    private Handler animHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            for (int i = 0; i < DOTNUM; i++){
-
-            }
-        }
-    };
-
 }

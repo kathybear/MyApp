@@ -4,4 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <com.ypf.myapp.view.RunningDots
+            android:id="@+id/runningDots"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 </LinearLayout>

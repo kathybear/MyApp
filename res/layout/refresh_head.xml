@@ -12,6 +12,13 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
 
+    <com.ypf.myapp.view.RunningDots
+            android:id="@+id/rdots1"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="invisible"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"

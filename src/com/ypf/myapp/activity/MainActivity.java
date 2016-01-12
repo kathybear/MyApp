@@ -71,7 +71,7 @@ public class MainActivity extends Activity implements OnRefreshListener, View.On
         // TODO Auto-generated method stub
         ListView list = (ListView) findViewById(R.id.content_view);
         items = new ArrayList<String>();
-        for (int i = 4; i >= 0; i--)
+        for (int i = 11; i >= 0; i--)
         {
             items.add("这里是item " + i);
         }
