@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import com.ypf.myapp.utils.Intents;
+import com.ypf.myapp.adapter.MyAdapter;
+import com.ypf.myapp.utils.IntentsUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyActivity extends Activity {
@@ -21,23 +23,33 @@ public class MyActivity extends Activity {
         setContentView(R.layout.main);
         context = this;
 
+        init();
+    }
+
+    private void init(){
         list_main = (ListView) findViewById(R.id.list_main);
         String[] strs = getResources().getStringArray(R.array.first_directory);
-
+        items = new ArrayList<String>();
+        for (String str : strs)
+            items.add(str);
+        list_main.setAdapter(new MyAdapter(items, context, R.layout.list_item_myactiivity));
+        list_main.setOnItemClickListener(listMainOnItemClickListener);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btn:
-                Intents.skipMainActivity(context);
-                break;
-            case R.id.btn_dot:
-                Intents.skipMyRoundDotActivity(context);
-                break;
-            case R.id.btn_running_dots:
-                Intents.skipMyRunningDotsActivity(context);
-                break;
+    private AdapterView.OnItemClickListener listMainOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position){
+                case 0:
+                    IntentsUtil.skipMainActivity(context);
+                    break;
+                case 1:
+                    IntentsUtil.skipMyRoundDotActivity(context);
+                    break;
+                case 2:
+                    IntentsUtil.skipMyRunningDotsActivity(context);
+                    break;
+            }
         }
-    }
+    };
 }

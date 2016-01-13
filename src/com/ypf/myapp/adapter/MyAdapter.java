@@ -47,11 +47,13 @@ public class MyAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
         TextView tv;
+        //item layout中需加入id=common_text的textView
         if (layoutID == -1) {
             view = LayoutInflater.from(context).inflate(R.layout.list_item_layout, parent, false);
             tv = (TextView) view.findViewById(R.id.name_tv);
         } else {
             view = LayoutInflater.from(context).inflate(layoutID, parent, false);
+            tv = (TextView) view.findViewById(R.id.common_text);
         }
         tv.setText(items.get(position));
         return view;

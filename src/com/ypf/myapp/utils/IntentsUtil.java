@@ -10,7 +10,7 @@ import com.ypf.myapp.activity.ViewPagerAndFragmentActivity;
 /**
  * Created by ypf on 2016/1/11.
  */
-public class Intents {
+public class IntentsUtil {
     public static void skipMainActivity(Context context){
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);

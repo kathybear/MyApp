@@ -11,7 +11,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true" />
-    <TextView
+
+    <com.ypf.myapp.view.GrayTextView
         android:id="@+id/name_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

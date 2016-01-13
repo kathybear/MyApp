@@ -16,7 +16,7 @@ import com.ypf.myapp.adapter.MyAdapter;
 import com.ypf.myapp.R;
 import com.ypf.myapp.tools.OnRefreshListener;
 import com.ypf.myapp.tools.UIThread;
-import com.ypf.myapp.utils.Intents;
+import com.ypf.myapp.utils.IntentsUtil;
 import com.ypf.myapp.view.PullAndLoadLayout;
 import com.ypf.myapp.view.PullToRefreshLayout;
 
@@ -216,7 +216,7 @@ public class MainActivity extends Activity implements OnRefreshListener {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
             {
                 Toast.makeText(MainActivity.this, " Click on group " + groupPosition + " item " + childPosition, Toast.LENGTH_SHORT).show();
-                Intents.skipViewPagerAndFragmentActivity(context);
+                IntentsUtil.skipViewPagerAndFragmentActivity(context);
                 return true;
             }
         });
