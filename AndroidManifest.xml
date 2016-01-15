@@ -5,7 +5,9 @@
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="15"/>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
+            android:name=".common.MyApplication"
             android:label="@string/app_name"
             android:icon="@drawable/ic_launcher"
             android:theme="@android:style/Theme.Light.NoTitleBar">
@@ -20,5 +22,7 @@
         <activity android:name=".activity.ViewPagerAndFragmentActivity"/>
         <activity android:name=".activity.MyRoundDotActivity"/>
         <activity android:name=".activity.MyRunningDotsActivity"/>
+        <activity android:name=".activity.FlowLayoutActivity"/>
+        <activity android:name=".activity.UncaughtExceptionActivity"/>
     </application>
 </manifest>

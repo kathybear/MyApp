@@ -49,6 +49,12 @@ public class MyActivity extends Activity {
                 case 2:
                     IntentsUtil.skipMyRunningDotsActivity(context);
                     break;
+                case 3:
+                    IntentsUtil.skipFlowLayoutActivity(context);
+                    break;
+                case 4:
+                    IntentsUtil.skipUncaughtExceptionActivity(context);
+                    break;
             }
         }
     };
