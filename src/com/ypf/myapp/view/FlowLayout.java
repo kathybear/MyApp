@@ -18,7 +18,6 @@ public class FlowLayout extends RelativeLayout {
     private final int CONTINUE = 0;
     private final int ANIMNUM = 5;
     private final int END = 1;
-    private final int STOP = 0;
 
     private boolean isFirst = true;
     private boolean isAnim = false;
@@ -26,7 +25,7 @@ public class FlowLayout extends RelativeLayout {
     private int layoutWidth;
     private int layoutHeight;
     private int down;
-    private int timeDiff = 50;
+    private int timeDiff = 30;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -58,8 +57,6 @@ public class FlowLayout extends RelativeLayout {
             layoutHeight = getMeasuredHeight();
         }
         if (isAnim) {
-            if (animNum == END)
-                animNum = ANIMNUM;
             childLayout(down);
         }
         else {
@@ -81,35 +78,25 @@ public class FlowLayout extends RelativeLayout {
             int childWidth = child.getMeasuredWidth();
             int childHeight = child.getMeasuredHeight();
             if (childWidth + curSize.x <= layoutWidth){
-                int curX;
-                int curY;
-                if (animNum == END) {
-                    curX = curSize.x;
-                    curY = curSize.y;
-                } else {
-                    curX = (int) (child.getLeft() - (child.getLeft() - curSize.x) * 1f / animNum);
-                    curY = (int) (child.getTop() - (child.getTop() - curSize.y) * 1f / animNum);
-                }
-                child.layout(curX, curY, curX + childWidth, curY + childHeight);
-                curSize.offset(childWidth, 0);
             } else {
                 curSize.set(0, curSize.y + childHeight);
-                int curX;
-                int curY;
-                if (animNum == END) {
-                    curX = curSize.x;
-                    curY = curSize.y;
-                } else {
-                    curX = (int) (child.getLeft() - (child.getLeft() - curSize.x) * 1f / animNum);
-                    curY = (int) (child.getTop() - (child.getTop() - curSize.y) * 1f / animNum);
-                }
-                child.layout(curX, curY, curX + childWidth, curY + childHeight);
-                curSize.offset(childWidth, 0);
             }
+            int curX;
+            int curY;
+            if (animNum == END) {
+                curX = curSize.x;
+                curY = curSize.y;
+            } else {
+                curX = (int) (child.getLeft() - (child.getLeft() - curSize.x) * 1f / animNum);
+                curY = (int) (child.getTop() - (child.getTop() - curSize.y) * 1f / animNum);
+            }
+            child.layout(curX, curY, curX + childWidth, curY + childHeight);
+            curSize.offset(childWidth, 0);
 
         }
+//        Log.e("childLayout", "animNum=" + animNum);
         if (from > START) {
-            if (animNum == STOP) {
+            if (animNum == END) {
                 isAnim = false;
                 removeViewAt(from);
             } else {
@@ -130,6 +117,7 @@ public class FlowLayout extends RelativeLayout {
                     Log.e("dispatchTouchEvent", "down=" + down);
                     if (down > -1) {
                         isAnim = true;
+                        animNum = ANIMNUM;
                         deleteView();
                     }
                 }
