@@ -1,5 +1,13 @@
 package com.ypf.myapp.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +39,36 @@ public class CommonUtil {
             }
         }
         return allImgFilePath;
+    }
+
+    public static String getUrlFromPhonePicture(Context context, int resultCode, Intent data){
+        if (resultCode == ((Activity)context).RESULT_OK) {
+            if (data != null && data.getData() != null) {
+                String imgFile = getPath(context, data.getData());
+                if (!TextUtils.isEmpty(imgFile)) {
+                    return imgFile;
+                }
+            }
+        }
+        return "";
+    }
+
+    public static String getPath(Context context, Uri uri) {
+        if (uri.toString().contains("content:")){
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = context.getContentResolver().query(uri, filePathColumn,
+                    null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            return picturePath;
+        } else if (uri.toString().contains("file:")){//部分小米手机直接返回图片url，直接取
+            return uri.toString().replace("file://", "");
+        }
+        return "";
     }
 }
