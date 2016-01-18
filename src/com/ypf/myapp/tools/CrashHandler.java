@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 import com.ypf.myapp.MyActivity;
+import com.ypf.myapp.utils.SDCardUtil;
 import com.ypf.myapp.utils.ToastUtil;
 
 import java.io.*;
@@ -110,9 +111,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
         }.start();
         //收集设备参数信息
-        //collectDeviceInfo(mContext);
+        collectDeviceInfo(mContext);
         //保存日志文件
-        //saveCrashInfo2File(ex);
+        saveCrashInfo2File(ex);
         return true;
     }
 
@@ -174,17 +175,15 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         try {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
-            String fileName = "crash-" + time + "-" + timestamp + ".log";
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = "/sdcard/crash/";
-                File dir = new File(path);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                FileOutputStream fos = new FileOutputStream(path + fileName);
-                fos.write(sb.toString().getBytes());
-                fos.close();
+            String fileName = "crash_MyApp-" + time + "-" + timestamp + ".log";
+            String path = SDCardUtil.getSDCardPath() + "/crash_MyApp/";
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
             }
+            FileOutputStream fos = new FileOutputStream(path + fileName);
+            fos.write(sb.toString().getBytes());
+            fos.close();
             return fileName;
         } catch (Exception e) {
             Log.e(TAG, "an error occured while writing file...", e);
