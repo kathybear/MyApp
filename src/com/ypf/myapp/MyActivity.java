@@ -55,6 +55,9 @@ public class MyActivity extends Activity {
                 case 4:
                     IntentsUtil.skipUncaughtExceptionActivity(context);
                     break;
+                case 5:
+                    IntentsUtil.skipTabActivity(context);
+                    break;
             }
         }
     };

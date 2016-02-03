@@ -28,14 +28,17 @@ public class DialogUtil {
     }
 
     public void show() {
-        dialog.show();
+        if (null != dialog)
+            dialog.show();
     }
 
     public void dismiss() {
-        dialog.dismiss();
+        if (null != dialog)
+            dialog.dismiss();
     }
 
     public void hide() {
-        dialog.hide();
+        if (null != dialog)
+            dialog.hide();
     }
 }

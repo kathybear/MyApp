@@ -13,4 +13,8 @@
     <color name="hard_hard_gray">#aaaaaa</color>
     <color name="hard_hard_hard_gray">#999999</color>
     <color name="hard_hard_hard_hard_gray">#777777</color>
+    <color name="text_color">#969696</color>
+    <color name="text_color1">#505050</color>
+    <color name="bg_gray">#e6e6e6</color>
+    <color name="bg_gray1">#fafafa</color>
 </resources>

@@ -34,6 +34,11 @@ public class IntentsUtil {
         context.startActivity(intent);
     }
 
+    public static void skipTabActivity(Context context){
+        Intent intent = new Intent(context, TabActivity.class);
+        context.startActivity(intent);
+    }
+
     public static void skipPhonePicForResult(Context context, int requestCode){
         Intent getAlbum = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         ((Activity) context).startActivityForResult(getAlbum, requestCode);

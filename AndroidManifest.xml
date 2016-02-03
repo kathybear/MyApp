@@ -24,5 +24,6 @@
         <activity android:name=".activity.MyRunningDotsActivity"/>
         <activity android:name=".activity.FlowLayoutActivity"/>
         <activity android:name=".activity.UncaughtExceptionActivity"/>
+        <activity android:name=".activity.TabActivity"/>
     </application>
 </manifest>

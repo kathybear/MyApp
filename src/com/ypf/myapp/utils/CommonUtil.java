@@ -71,4 +71,16 @@ public class CommonUtil {
         }
         return "";
     }
+
+    //用于判断是否调用了activity的onDestroy().  API level 17上可以加上activity.isDestroyed()
+    public static boolean isValidContext(Context context){
+        if (null != context)
+            return false;
+        Activity activity = (Activity) context;
+        if (activity.isFinishing()){
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
