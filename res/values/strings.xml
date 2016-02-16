@@ -25,6 +25,7 @@
         <item>to flow layout</item>
         <item>to uncaughtexception</item>
         <item>to tab fragment</item>
+        <item>to webview js</item>
     </string-array>
 
 </resources>

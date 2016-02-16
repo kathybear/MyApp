@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/* 接收 JSON 格式的联系人数据，添加到表格中显示 */
+	function show(jsondata){
+			/* 将 JSON 字符串转换成 JSON 对象 */
+	        var jsonobjs = eval(jsondata);
+	        var table = document.getElementById("personTable");
+	        for(var y=0; y<jsonobjs.length; y++){
+	        	// 添加行
+		        var tr = table.insertRow(table.rows.length);
+		        // 编号列
+	        	var td1 = tr.insertCell(0);
+		        td1.innerHTML = jsonobjs[y].id; 
+				// 性名列
+		        var td2 = tr.insertCell(1);
+		        td2.align = "center";
+		        td2.innerHTML = jsonobjs[y].name; 
+				// 电话列,电话号码为超链接
+		        var td3 = tr.insertCell(2);
+		        td3.align = "center";
+		        // <a href='javascript:contactsAction.call("139999999999")>139999999999</a>
+		        td3.innerHTML = "<a href='javascript:contactsAction.call(\""+ jsonobjs[y].mobile+ "\")'>"+ jsonobjs[y].mobile+ "</a>"; 
+			}
+	}
+</script>
+
+</head>
+<!-- 下面的 JS 代码将调用  的  getContacts() 方法-->
+<body onload="javascript:contactsAction.getContacts();">
+   <table border="0" width="100%" id="personTable" cellspacing="0">
+		<tr>
+			<td width="20%">编号</td><td width="40%" align="center">姓名</td><td align="center">电话</td>
+		</tr>
+	</table>
+	<a href="javascript:window.location.reload()">刷新</a>
+</body>
+</html>

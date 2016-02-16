@@ -58,6 +58,9 @@ public class MyActivity extends Activity {
                 case 5:
                     IntentsUtil.skipTabActivity(context);
                     break;
+                case 6:
+                    IntentsUtil.skipWebViewActivity(context);
+                    break;
             }
         }
     };

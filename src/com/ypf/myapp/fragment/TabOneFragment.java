@@ -40,7 +40,9 @@ public class TabOneFragment extends Fragment implements View.OnClickListener {
         Handler handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                linear_search.performClick();
+                //16-2-16  在进入后就退出，会导致延时事件在触发后找不到绑定的视图，然后报错
+                if (!activity.isFinishing())
+                    linear_search.performClick();
             }
         };
         handler.sendEmptyMessageDelayed(0, 2000);

@@ -25,5 +25,6 @@
         <activity android:name=".activity.FlowLayoutActivity"/>
         <activity android:name=".activity.UncaughtExceptionActivity"/>
         <activity android:name=".activity.TabActivity"/>
+        <activity android:name=".activity.WebViewActivity"/>
     </application>
 </manifest>
