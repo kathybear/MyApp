@@ -55,6 +55,16 @@ public class IntentsUtil {
         context.startActivity(intent);
     }
 
+    public static void skipChartViewActivity(Context context){
+        Intent intent = new Intent(context, ChartViewActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void skipDateShowActivity(Context context){
+        Intent intent = new Intent(context, DateShowActivity.class);
+        context.startActivity(intent);
+    }
+
     public static void skipViewPagerAndFragmentActivity(Context context){
         Intent intent = new Intent(context, ViewPagerAndFragmentActivity.class);
         context.startActivity(intent);

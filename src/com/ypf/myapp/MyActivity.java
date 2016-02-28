@@ -61,6 +61,12 @@ public class MyActivity extends Activity {
                 case 6:
                     IntentsUtil.skipWebViewActivity(context);
                     break;
+                case 7:
+                    IntentsUtil.skipChartViewActivity(context);
+                    break;
+                case 8:
+                    IntentsUtil.skipDateShowActivity(context);
+                    break;
             }
         }
     };

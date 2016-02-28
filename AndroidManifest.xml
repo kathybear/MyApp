@@ -26,5 +26,7 @@
         <activity android:name=".activity.UncaughtExceptionActivity"/>
         <activity android:name=".activity.TabActivity"/>
         <activity android:name=".activity.WebViewActivity"/>
+        <activity android:name=".activity.ChartViewActivity"/>
+        <activity android:name=".activity.DateShowActivity"/>
     </application>
 </manifest>

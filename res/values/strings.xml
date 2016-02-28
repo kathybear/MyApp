@@ -26,6 +26,8 @@
         <item>to uncaughtexception</item>
         <item>to tab fragment</item>
         <item>to webview js</item>
+        <item>to chartview</item>
+        <item>to dateshow</item>
     </string-array>
 
 </resources>
