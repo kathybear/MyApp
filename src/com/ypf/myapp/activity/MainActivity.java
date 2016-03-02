@@ -14,11 +14,13 @@ import android.view.animation.RotateAnimation;
 import android.widget.*;
 import com.ypf.myapp.adapter.MyAdapter;
 import com.ypf.myapp.R;
+import com.ypf.myapp.common.MyConstants;
 import com.ypf.myapp.tools.OnRefreshListener;
 import com.ypf.myapp.tools.UIThread;
 import com.ypf.myapp.utils.IntentsUtil;
 import com.ypf.myapp.view.PullAndLoadLayout;
 import com.ypf.myapp.view.PullToRefreshLayout;
+import com.ypf.myapp.view.SlideListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +30,14 @@ import java.util.List;
  */
 public class MainActivity extends Activity implements OnRefreshListener {
     private Context context;
-
-    private AbsListView alv;
-    private PullToRefreshLayout refreshLayout;
-    private View loading;
-    private RotateAnimation loadingAnimation;
-    private TextView loadTextView;
+    private SlideListView list;
+    //private AbsListView alv;
+    //private PullToRefreshLayout refreshLayout;
+    //private View loading;
+    //private RotateAnimation loadingAnimation;
+    //private TextView loadTextView;
     private MyAdapter adapter;
-    private boolean isLoading = false;
+    //private boolean isLoading = false;
 
     private PullAndLoadLayout pal;
     private List<String> items;
@@ -53,6 +55,11 @@ public class MainActivity extends Activity implements OnRefreshListener {
                     adapter.notifyDataSetChanged();
                     pal.loadFinish(0);
                     break;
+                case MyConstants.SLIDEBACK:
+                    //list.slideBack();
+                    items.remove(msg.arg1);
+                    adapter.notifyDataSetChanged();
+                    break;
             }
         }
     };
@@ -69,13 +76,14 @@ public class MainActivity extends Activity implements OnRefreshListener {
 
     private void init1() {
         // TODO Auto-generated method stub
-        ListView list = (ListView) findViewById(R.id.content_view);
+        list = (SlideListView) findViewById(R.id.content_view);
+        list.initSlideMode(SlideListView.MOD_RIGHT);
         items = new ArrayList<String>();
         for (int i = 11; i >= 0; i--)
         {
             items.add("这里是item " + i);
         }
-        adapter = new MyAdapter(this, items);
+        adapter = new MyAdapter(this, items, handler);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -115,7 +123,7 @@ public class MainActivity extends Activity implements OnRefreshListener {
         });
     }
 
-    private void init()
+    /*private void init()
     {
         alv = (AbsListView) findViewById(R.id.content_view);
         refreshLayout = (PullToRefreshLayout) findViewById(R.id.refresh_view);
@@ -126,54 +134,54 @@ public class MainActivity extends Activity implements OnRefreshListener {
         // 添加匀速转动动画
         LinearInterpolator lir = new LinearInterpolator();
         loadingAnimation.setInterpolator(lir);
-    }
+    }*/
 
     /**
      * ListView初始化方法
      */
-//    private void initListView()
-//    {
-//        List<String> items = new ArrayList<String>();
-//        for (int i = 0; i < 30; i++)
-//        {
-//            items.add("这里是item " + i);
-//        }
-//        // 添加head
-//        View headView = getLayoutInflater().inflate(R.layout.listview_head, null);
-//        ((ListView) alv).addHeaderView(headView, null, false);
-//        // 添加footer
-//        View footerView = getLayoutInflater().inflate(R.layout.load_more, null);
-//        loading = footerView.findViewById(R.id.loading_icon);
-//        loadTextView = (TextView) footerView.findViewById(R.id.loadmore_tv);
-//        ((ListView) alv).addFooterView(footerView, null, false);
-//        footerView.setOnClickListener(this);
-//        adapter = new MyAdapter(this, items);
-//        alv.setAdapter(adapter);
-//        alv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-//        {
-//
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
-//            {
-//                Toast.makeText(MainActivity.this, "LongClick on " + parent.getAdapter().getItemId(position), Toast.LENGTH_SHORT).show();
-//                return true;
-//            }
-//        });
-//        alv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-//        {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-//            {
-//                Toast.makeText(MainActivity.this, " Click on " + parent.getAdapter().getItemId(position), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+/*    private void initListView()
+    {
+        List<String> items = new ArrayList<String>();
+        for (int i = 0; i < 30; i++)
+        {
+            items.add("这里是item " + i);
+        }
+        // 添加head
+        View headView = getLayoutInflater().inflate(R.layout.listview_head, null);
+        ((ListView) alv).addHeaderView(headView, null, false);
+        // 添加footer
+        View footerView = getLayoutInflater().inflate(R.layout.load_more, null);
+        loading = footerView.findViewById(R.id.loading_icon);
+        loadTextView = (TextView) footerView.findViewById(R.id.loadmore_tv);
+        ((ListView) alv).addFooterView(footerView, null, false);
+        footerView.setOnClickListener(this);
+        adapter = new MyAdapter(this, items);
+        alv.setAdapter(adapter);
+        alv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Toast.makeText(MainActivity.this, "LongClick on " + parent.getAdapter().getItemId(position), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        alv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Toast.makeText(MainActivity.this, " Click on " + parent.getAdapter().getItemId(position), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
 
     /**
      * GridView初始化方法
      */
-    private void initGridView()
+    /*private void initGridView()
     {
         List<String> items = new ArrayList<String>();
         for (int i = 0; i < 30; i++)
@@ -201,12 +209,12 @@ public class MainActivity extends Activity implements OnRefreshListener {
                 Toast.makeText(MainActivity.this, " Click on " + parent.getAdapter().getItemId(position), Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     /**
      * ExpandableListView初始化方法
      */
-    private void initExpandableListView()
+    /*private void initExpandableListView()
     {
         ((ExpandableListView) alv).setAdapter(new ExpandableListAdapter(this));
         ((ExpandableListView) alv).setOnChildClickListener(new ExpandableListView.OnChildClickListener()
@@ -248,7 +256,7 @@ public class MainActivity extends Activity implements OnRefreshListener {
                 return true;
             }
         });
-    }
+    }*/
 
     @Override
     public void onRefresh()
@@ -259,12 +267,12 @@ public class MainActivity extends Activity implements OnRefreshListener {
             @Override
             public void handleMessage(Message msg)
             {
-                refreshLayout.refreshFinish(PullToRefreshLayout.REFRESH_SUCCEED);
+                //refreshLayout.refreshFinish(PullToRefreshLayout.REFRESH_SUCCEED);
             }
         }.sendEmptyMessageDelayed(0, 5000);
     }
 
-    class ExpandableListAdapter extends BaseExpandableListAdapter
+    /*class ExpandableListAdapter extends BaseExpandableListAdapter
     {
         private String[] groupsStrings;// = new String[] { "这里是group 0",
         // "这里是group 1", "这里是group 2" };
@@ -353,5 +361,5 @@ public class MainActivity extends Activity implements OnRefreshListener {
             return true;
         }
 
-    }
+    }*/
 }

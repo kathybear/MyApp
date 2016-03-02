@@ -55,6 +55,7 @@ public class PullAndLoadLayout extends RelativeLayout {
     private boolean canPullUp = false;
     //上个事件的点坐标
     private float lastY = 0;
+    private float lastX = 0;
     // 手指滑动距离与下拉头的滑动距离比，中间会随正切函数变化
     private float radio = 2;
 
@@ -176,62 +177,67 @@ public class PullAndLoadLayout extends RelativeLayout {
         switch(ev.getActionMasked()){
             case MotionEvent.ACTION_DOWN:
                 lastY = ev.getY();
+                lastX = ev.getX();
                 timer.cancel();
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                isCanPullDown();
-                isCanPullUp();
-                // 可以下拉，正在加载时不能下拉
-                if(pullDownDist > 0 || canPullDown && !canPullUp && state != LOADING){
-                    // 对实际滑动距离做缩小，造成用力拉的感觉
-                    pullDownDist += (ev.getY() - lastY) / radio;
-                    //当head完全隐藏后，防止能继续上滑，隐藏AbsListView
-                    if(pullDownDist < 0)
-                        pullDownDist = 0;
-                    //不让下拉的长度超过控件的长度
-                    if(pullDownDist > getMeasuredHeight())
-                        pullDownDist = getMeasuredHeight();
-                    //				if(state == REFRESHING)
-                    //					isTouch = true;
-                    lastY = ev.getY();
-                    // 根据下拉距离改变比例，以到达对实际滑动距离做缩小，造成用力拉的感觉
-                    radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight() * pullDownDist));
-                    //通过重新布局达到滑动效果
-                    requestLayout();
+                //只有在Y滑动距离大于X时才会触发刷新或加载
+                if (Math.abs(ev.getY() - lastY) > Math.abs(ev.getX() - lastX)) {
+                    isCanPullDown();
+                    isCanPullUp();
+                    // 可以下拉，正在加载时不能下拉
+                    if(pullDownDist > 0 || canPullDown && !canPullUp && state != LOADING){
+                        // 对实际滑动距离做缩小，造成用力拉的感觉
+                        pullDownDist += (ev.getY() - lastY) / radio;
+                        //当head完全隐藏后，防止能继续上滑，隐藏AbsListView
+                        if(pullDownDist < 0)
+                            pullDownDist = 0;
+                        //不让下拉的长度超过控件的长度
+                        if(pullDownDist > getMeasuredHeight())
+                            pullDownDist = getMeasuredHeight();
+                        //				if(state == REFRESHING)
+                        //					isTouch = true;
+                        lastY = ev.getY();
+                        // 根据下拉距离改变比例，以到达对实际滑动距离做缩小，造成用力拉的感觉
+                        radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight() * pullDownDist));
+                        //通过重新布局达到滑动效果
+                        requestLayout();
 
-                    stopHeadAnim();
-                    headmrp.setProgress(pullDownDist);
+                        stopHeadAnim();
+                        headmrp.setProgress(pullDownDist);
 
-                    if(pullDownDist >= refreshDist && state == INIT)
-                        changeState(RELEASE_TO_REFRESH);
-                    if(pullDownDist <= refreshDist && state == RELEASE_TO_REFRESH)
-                        changeState(INIT);
-                    //取消点击事件和长按点击事件，而不用反射弧
-                    if(pullDownDist > 0)
-                        ev.setAction(MotionEvent.ACTION_CANCEL);
+                        if(pullDownDist >= refreshDist && state == INIT)
+                            changeState(RELEASE_TO_REFRESH);
+                        if(pullDownDist <= refreshDist && state == RELEASE_TO_REFRESH)
+                            changeState(INIT);
+                        //取消点击事件和长按点击事件，而不用反射弧
+                        if(pullDownDist > 0)
+                            ev.setAction(MotionEvent.ACTION_CANCEL);
+                    }
+
+                    if(pullUpDist < 0 || canPullUp && !canPullDown && state != REFRESHING){
+                        pullUpDist += (ev.getY() - lastY) / radio;
+                        if (pullUpDist > 0)
+                            pullUpDist = 0;
+                        if (pullUpDist < -getMeasuredHeight())
+                            pullUpDist = -getMeasuredHeight();
+                        lastY = ev.getY();
+                        radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight() * (-pullUpDist)));
+                        requestLayout();
+
+                        stopFootAnim();
+                        footmrp.setProgress(-pullUpDist);
+
+                        if (pullUpDist <= -loadDist && state == INIT)
+                            changeState(RELEASE_TO_LOAD);
+                        if (pullUpDist >= -loadDist && state == RELEASE_TO_LOAD)
+                            changeState(INIT);
+                        if (pullUpDist < 0)
+                            ev.setAction(MotionEvent.ACTION_CANCEL);
+                    }
                 }
 
-                if(pullUpDist < 0 || canPullUp && !canPullDown && state != REFRESHING){
-                    pullUpDist += (ev.getY() - lastY) / radio;
-                    if (pullUpDist > 0)
-                        pullUpDist = 0;
-                    if (pullUpDist < -getMeasuredHeight())
-                        pullUpDist = -getMeasuredHeight();
-                    lastY = ev.getY();
-                    radio = (float) (2 + 2 * Math.tan(Math.PI / 2 / getMeasuredHeight() * (-pullUpDist)));
-                    requestLayout();
-
-                    stopFootAnim();
-                    footmrp.setProgress(-pullUpDist);
-
-                    if (pullUpDist <= -loadDist && state == INIT)
-                        changeState(RELEASE_TO_LOAD);
-                    if (pullUpDist >= -loadDist && state == RELEASE_TO_LOAD)
-                        changeState(INIT);
-                    if (pullUpDist < 0)
-                        ev.setAction(MotionEvent.ACTION_CANCEL);
-                }
                 break;
             case MotionEvent.ACTION_UP:
                 if(state == RELEASE_TO_REFRESH){
