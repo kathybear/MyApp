@@ -22,18 +22,18 @@ import com.ypf.myapp.utils.IntentsUtil;
 public class UncaughtExceptionActivity extends Activity implements View.OnClickListener {
     private String s;
     private Context context;
-    private EditText editText;
+    /*private EditText editText;
     private Button button_getPicture;
-    private ImageView image_picture;
+    private ImageView image_picture;*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uncaughtexception);
-//        System.out.println(s.equals("any string"));
+        System.out.println(s.equals("any string"));
         context = this;
 
-        editText = (EditText) findViewById(R.id.editText);
+        /*editText = (EditText) findViewById(R.id.editText);
         editText.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -76,19 +76,19 @@ public class UncaughtExceptionActivity extends Activity implements View.OnClickL
         });
         button_getPicture = (Button) findViewById(R.id.button_getPicture);
         button_getPicture.setOnClickListener(this);
-        image_picture = (ImageView) findViewById(R.id.image_picture);
+        image_picture = (ImageView) findViewById(R.id.image_picture);*/
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button_getPicture:
+            /*case R.id.button_getPicture:
                 IntentsUtil.skipPhonePicForResult(context, MyConstants.GET_PHONE_PICTURE);
-                break;
+                break;*/
         }
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case MyConstants.GET_PHONE_PICTURE:
@@ -96,5 +96,5 @@ public class UncaughtExceptionActivity extends Activity implements View.OnClickL
                 image_picture.setImageBitmap(BitmapFactory.decodeFile(imageUrl));
                 break;
         }
-    }
+    }*/
 }

@@ -28,5 +28,6 @@
         <activity android:name=".activity.WebViewActivity"/>
         <activity android:name=".activity.ChartViewActivity"/>
         <activity android:name=".activity.DateShowActivity"/>
+        <activity android:name=".activity.BaseActivity"/>
     </application>
 </manifest>
